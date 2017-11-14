@@ -1,6 +1,6 @@
 const proxyquire = require('proxyquire');
 const request = require('request');
-const handleResponse = require('./Helper.js');
+const opn = require('opn');
 
 describe('When checking for iPhone X pick up with no post code', () => {
 	let sut;
@@ -14,9 +14,8 @@ describe('When checking for iPhone X pick up with no post code', () => {
 	});
 });
 
-
 describe('When iPhone X pick up is not available', () => {
-	let sut;
+	let sut, handleResponse;
 
 	const invalidResponse = {
 		body: {
@@ -34,6 +33,10 @@ describe('When iPhone X pick up is not available', () => {
 		spyOn(console, 'log');
 		spyOn(request, 'get');
 
+		handleResponse = proxyquire('./Helper.js', {
+			'./Config.js': { apiUrl: 'appleUrl', location: 'andMyPostCode', timerInterval: '1000', addToCartUrl: 'cartmeplz' }
+		});
+
 		sut = proxyquire('./Scraper.js', {
 			'./Config.js': { apiUrl: 'appleUrl', location: 'andMyPostCode', timerInterval: '1000' }
 		});
@@ -47,12 +50,6 @@ describe('When iPhone X pick up is not available', () => {
 
 	it('should output a message in the console', () => {
 		handleResponse(invalidResponse);
-		expect(console.log).toHaveBeenCalledWith('No iPhone X devices available');
+		expect(console.log).toHaveBeenCalledWith('\x1b[31m', 'No iPhone X devices available');
 	});
 });
-
-
-describe('When iPhone X pick up is available', () => {
-
-});
-

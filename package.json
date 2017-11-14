@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-		"start": "node index.js",
+    "start": "node index.js",
     "test": "jasmine-node ./ --autotest --watch --color --growl"
   },
   "author": "Tom Christian",
   "license": "ISC",
   "devDependencies": {
     "jasmine-node": "^1.14.5",
+    "opn": "^5.1.0",
     "proxyquire": "^1.8.0",
     "request": "^2.83.0"
   }

@@ -17,7 +17,6 @@ module.exports = () => {
 				if (!handleResponse(response.body)) {
 					setTimeout(() => {
 						polling = false;
-						checkApple();
 					}, config.timerInterval);
 				}
 			});
@@ -25,5 +24,4 @@ module.exports = () => {
 	}
 
 	checkApple();
-	setTimeout(() => checkApple(), config.timerInterval);	
 }
